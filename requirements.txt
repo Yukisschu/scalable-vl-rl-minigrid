@@ -1,0 +1,9 @@
+torch
+torchvision
+torch_ac
+minigrid
+gymnasium
+numpy
+matplotlib
+pyyaml
+pillow

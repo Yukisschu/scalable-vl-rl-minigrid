@@ -1,0 +1,47 @@
+env:
+  env_id:  "MiniGrid-Fetch-5x5-N2-v0"
+  n_envs:  16
+
+reward:
+  # Set dense: false to use the official MiniGrid sparse reward:
+  #   success → 1 - 0.9 * (step_count / max_steps)   (range 0.1 – 1.0)
+  #   failure → 0
+  # Set dense: true to use the shaped reward below.
+  dense: true
+
+  step_penalty:           -0.01
+  first_sight_bonus:       0.5
+  approach_scale:          0.45
+  success_reward:          10.0
+  useless_action_penalty: -0.05
+
+model:
+  use_memory: true
+  use_text:   true
+
+ppo:
+  frames_max:    5_000_000 
+  rollout_steps: 256
+  recurrence:    8        # TBPTT steps; must divide rollout_steps
+  train_epochs:  4
+  gamma:         0.99
+  lr:            0.001
+  clip_eps:      0.2
+  ent_coef:      0.01
+  value_coef:    0.5
+  max_grad_norm: 0.5
+  gae_lambda:    0.95
+  batch_size:    256      # rollout_steps * n_envs / 4
+
+logging:
+  save_interval: 50000
+  log_dir:       "runs/fetch"
+
+eval:
+  n_episodes: 50
+  n_record:   6
+  seeds:      [0, 7, 42, 77, 123, 256]
+  gif_fps:    8
+  gif_resize: 256
+
+seed: 1
