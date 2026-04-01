@@ -61,6 +61,43 @@ Hyperparameters are controlled via `config.yaml`.
 
 ---
 
+## Results & Conclusion
+
+### Environment
+
+<p align="center">
+  <img src="figs/env/env_demo.png" width="480" alt="MiniGrid-Fetch environment — partial RGB observation and mission string"/>
+</p>
+
+
+### Curriculum Learning on 8×8
+
+Warm-starting the `film_dense` agent from its 6×6 checkpoint and fine-tuning on 8×8 via curriculum learning achieved **100% success rate**.
+
+
+<p align="center">
+  <img src="figs/8x8-cl/8x8-cl-film_dense.png" width="560" alt="8×8 CL film_dense detailed curves"/>
+</p>
+
+### Agent demo (8×8, `film_dense` after CL)
+
+<table align="center">
+  <tr>
+    <td align="center"><em>"fetch the yellow ball"</em></td>
+    <td align="center"><em>"fetch the green ball"</em></td>
+  </tr>
+  <tr>
+    <td><img src="runs/MiniGrid-Fetch-8x8-N3-v0_film_dense_seed1_25-02-26-22-29-30/gifs/ep06_ok.gif" width="320" alt="fetch the yellow ball"/></td>
+    <td><img src="runs/MiniGrid-Fetch-8x8-N3-v0_film_dense_seed1_25-02-26-22-29-30/gifs/ep02_ok.gif" width="320" alt="fetch the green ball"/></td>
+  </tr>
+</table>
+
+### Summary
+
+Across all grid sizes, **FiLM-based agents consistently outperform simple concatenation**, and dense reward shaping accelerates early learning. On the hardest 8×8 setting, direct training leaves all variants below 100% success; curriculum learning (5×5 → 6×6 → 8×8) closes that gap, enabling `film_dense` to reach **100% task completion** by re-using transferable visual-language representations learned on smaller grids.
+
+---
+
 ## Acknowledgements
 
 This project builds on the [MiniGrid](https://github.com/Farama-Foundation/Minigrid) environment library maintained by the Farama Foundation. The FiLM conditioning approach is based on Perez et al. (2018).
